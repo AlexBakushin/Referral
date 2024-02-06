@@ -1,0 +1,26 @@
+{% extends 'main/index.html' %}
+{% block content %}
+<div class="col-12">
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div>
+                <div class="card-header">
+                    <h2 class="card-title">Информация по {{object.username}}</h2>
+                    <h3 class="card-title">Электронная почта: {{object.email}}</h3>
+                    <h3 class="card-title">Личный реферальный код: {{object.referral_code}}</h3>
+                    <h3 class="card-title">Код годен до:{{object.expiration_date}}</h3>
+                   <ul>Его рефералы:
+                        {%for ref in object.referrals.all %}
+                        {%if ref.id != user.id%}
+                        <li>ID- {{ref.id}}  Имя - {{ref.username}}</a></li>
+                        {%endif%}
+                        {%endfor%}
+                   </ul>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

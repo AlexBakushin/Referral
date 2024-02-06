@@ -41,15 +41,20 @@ class ProfileView(UpdateView):
     success_url = reverse_lazy('profile')
 
     def get_object(self, queryset=None):
-        print(f'{self.request.user.referral_code} мой код')
         for referral in User.objects.all():
-            print(f'{referral.owner} код др юзера {referral.username}')
             if referral.owner is not None and self.request.user.referral_code == referral.owner:
-                print(f'{referral} подходит')
-                print(f'{self.request.user.referrals} - до')
-                self.request.user.referrals += f'{referral.username} '
-                print(f'{self.request.user.referrals} - после')
+                self.request.user.referrals.add(referral)
+                self.request.user.save()
         return self.request.user
+
+
+def view(request, pk):
+    referral = User.objects.get(pk=pk)
+    context = {
+        'title': 'Просмотр',
+        'object': referral,
+    }
+    return render(request, 'main/view.html', context)
 
 
 def generate_new_code(request):
