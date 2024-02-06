@@ -10,10 +10,18 @@
                          </div>
                             {% csrf_token %}
                             {{ form.as_p }}
+                            <ul>
+                                <li>Ваш реферальный код: {{object.referral_code}}</li>
+                                <li>Код годен до: {{object.expiration_date}}</li>
+                                {%if object.referrals != '-' %}
+                                <li>Ваши рефералы: {{object.referrals}}</li>
+                                {%endif%}
+                            </ul>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
                        Сохранить
                     </button>
                         <br>
+                        <a href="{% url 'generate_new_code' %}" class="btn btn-lg btn-block btn-outline-danger" >Сгенерировать новый реферальный код</a>
                     </div>
                 </div>
             </form>
