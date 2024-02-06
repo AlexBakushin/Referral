@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
-from main.views import index, RegisterView, ProfileView, generate_new_code
+from main.views import index, RegisterView, ProfileView, generate_new_code, view
 
 
 urlpatterns = [
@@ -28,4 +28,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/genrefcode/', generate_new_code, name='generate_new_code'),
+    path('view/<int:pk>/', view, name='view'),
 ]

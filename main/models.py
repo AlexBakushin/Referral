@@ -17,7 +17,10 @@ class User(AbstractUser):
     expiration_date = models.DateTimeField(default=(datetime.datetime.now() + datetime.timedelta(days=5)),
                                            verbose_name='Код действителен до')
     owner = models.CharField(max_length=7, verbose_name='Реферальный код, другового пользователя', **NULLABLE)
-    referrals = models.TextField(verbose_name='Мои рефералы', default='-')
+    referrals = models.ManyToManyField('self', verbose_name='Мои рефералы', blank=True)
+
+    def __str__(self):
+        return self.username
 
 
 @receiver(post_save, sender=User)
